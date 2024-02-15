@@ -1,9 +1,10 @@
-import type { XOR } from 'ts-xor'
+import { TGenres } from './Config'
 
-export type Movie = {
+export type TMovie = {
 	adult: boolean
 	backdrop_path: string
 	genre_ids: number[]
+	genres?: Array<TGenres['genres'][number]>
 	id: number
 	original_language: string
 	original_title: string
@@ -17,17 +18,9 @@ export type Movie = {
 	vote_count: number
 }
 
-export type ApiSuccessResponse = {
+export type TMovieList = {
 	page: number
-	results: Movie[]
+	results: TMovie[]
 	total_pages: number
 	total_results: number
 }
-
-export type ApiErrorResponse = {
-	status_code: number
-	status_message: string
-	success: boolean
-}
-
-export type ApiResponse = XOR<ApiSuccessResponse, ApiErrorResponse>

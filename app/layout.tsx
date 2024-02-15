@@ -22,7 +22,9 @@ const RootLayout = ({
 	<html lang="en">
 		<body className={inter.className}>
 			<Navbar />
-			<section className="mx-auto max-w-screen-xl">{children}</section>
+			<section className="mx-auto max-w-screen-xl py-10">
+				{children}
+			</section>
 		</body>
 	</html>
 )

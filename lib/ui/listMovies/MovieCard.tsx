@@ -1,77 +1,92 @@
-import { BellIcon, CheckIcon } from '@radix-ui/react-icons'
+import { StarIcon } from '@radix-ui/react-icons'
+import { getPlaiceholder } from 'plaiceholder'
 
 import { cn } from '@/functions/classnames'
-import { Button } from '@/components/Button'
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/Card'
+import { Card, CardContent, CardFooter } from '@/components/Card'
+// import Link from 'next/link'
+import { TMovie } from '@/lib/types/MovieList'
+import Image from 'next/image'
+import { ImageConfigurations } from '@/lib/types/Config'
+import { Suspense } from 'react'
 
-const notifications = [
-	{
-		id: 1,
-		title: 'Your call has been confirmed.',
-		description: '1 hour ago',
-	},
-	{
-		id: 2,
-		title: 'You have a new message!',
-		description: '1 hour ago',
-	},
-	{
-		id: 3,
-		title: 'Your subscription is expiring soon!',
-		description: '2 hours ago',
-	},
-]
+type CardProps = React.ComponentProps<typeof Card> & {
+	movieData: TMovie
+	imageConfig: ImageConfigurations
+}
 
-type CardProps = React.ComponentProps<typeof Card>
+const posterUrlBuilder = (
+	base_url: string,
+	size: ImageConfigurations['poster_sizes'],
+	poster_path: string,
+) => {
+	return `${base_url}${size}${poster_path}`
+}
+// TODO : Better loader
+const svg = `
+<svg width="700" height="475" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="g">
+      <stop stop-color="#333" offset="20%" />
+      <stop stop-color="#222" offset="50%" />
+      <stop stop-color="#333" offset="70%" />
+    </linearGradient>
+  </defs>
+  <rect width="700" height="475" fill="#333" />
+  <rect id="r" width="700" height="475" fill="url(#g)" />
+  <animate xlink:href="#r" attributeName="x" from="-700" to="700" dur="1s" repeatCount="indefinite"  />
+</svg>`
 
-const MovieCard = ({ className, ...props }: CardProps) => (
-	<Card className={cn('w-[380px]', className)} {...props}>
-		<CardHeader>
-			<CardTitle>Notifications</CardTitle>
-			<CardDescription>You have 3 unread messages.</CardDescription>
-		</CardHeader>
-		<CardContent className="grid gap-4">
-			<div className="flex items-center space-x-4 rounded-md border p-4">
-				<BellIcon />
-				<div className="flex-1 space-y-1">
-					<p className="text-sm font-medium leading-none">
-						Push Notifications
-					</p>
-					<p className="text-sm text-muted-foreground">
-						Send notifications to device.
-					</p>
-				</div>
-			</div>
-			<div>
-				{notifications.map(({ id, title, description }) => (
-					<div
-						key={id}
-						className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0">
-						<span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" />
-						<div className="space-y-1">
-							<p className="text-sm font-medium leading-none">
-								{title}
-							</p>
-							<p className="text-sm text-muted-foreground">
-								{description}
-							</p>
+const MovieCard = async ({
+	movieData,
+	imageConfig,
+	className,
+	...props
+}: CardProps) => {
+	const src = posterUrlBuilder(
+		imageConfig.base_url,
+		'original',
+		movieData.poster_path,
+	)
+
+	return (
+		<Card
+			className={cn(
+				'w-full transition-all hover:scale-105 hover:bg-secondary hover:shadow-secondary-foreground',
+				className,
+			)}
+			{...props}>
+			<CardContent className="relative block aspect-auto h-72 px-0 py-2">
+				<Image
+					src={src}
+					alt={`Movie ${movieData.title} poster`}
+					className="rounded-t-lg "
+					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+					placeholder={`data:image/svg+xml;base64, ${Buffer.from(svg).toString('base64')}`}
+					fill
+				/>
+			</CardContent>
+			<CardFooter>
+				<div className="grid flex-1 gap-2">
+					<h3 className="line-clamp-2 h-14 pt-2 text-base font-semibold">
+						{movieData.title}
+					</h3>
+					<div className="flex items-center justify-between">
+						<p className="text-sm text-gray-500">
+							{movieData.genre_ids}
+						</p>
+						<div>
+							<div className="flex items-center gap-0.5 text-sm">
+								<StarIcon className="h-4 w-4 fill-primary" />
+								<StarIcon className="h-4 w-4 fill-primary" />
+								<StarIcon className="h-4 w-4 fill-primary" />
+								<StarIcon className="h-4 w-4 fill-muted stroke-muted-foreground" />
+								<StarIcon className="h-4 w-4 fill-muted stroke-muted-foreground" />
+							</div>
 						</div>
 					</div>
-				))}
-			</div>
-		</CardContent>
-		<CardFooter>
-			<Button className="w-full">
-				<CheckIcon className="mr-2 h-4 w-4" /> Mark all as read
-			</Button>
-		</CardFooter>
-	</Card>
-)
+				</div>
+			</CardFooter>
+		</Card>
+	)
+}
 export default MovieCard

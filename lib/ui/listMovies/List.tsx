@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation'
 import { API_TOKEN } from '@/lib/constants'
 
 import MovieCard from './MovieCard'
-import { ApiResponse } from '@/lib/types/MovieList'
+import { TMovieList } from '@/lib/types/MovieList'
+import { TGenres, TMDBConfig } from '@/lib/types/Config'
+import Link from 'next/link'
 
-const url = 'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
 const options = {
 	method: 'GET',
 	headers: {
@@ -14,26 +15,71 @@ const options = {
 	},
 }
 
-const getMoviesList = async () => {
+const getImageConfiguration = async () => {
+	const url = 'https://api.themoviedb.org/3/configuration'
 	const res = await fetch(url, options)
-	const data: ApiResponse = await res.json()
+	const data: TMDBConfig = await res.json()
 
-	// Uneven data sent -- data.result if success / data.success === false if failed fetch
-	if (!data.results || data.success === false) {
+	if (!res.ok) {
 		return notFound()
 	}
+	return data
+}
+
+const getGenres = async () => {
+	const url = 'https://api.themoviedb.org/3/genre/movie/list'
+	const res = await fetch(url, options)
+	const data: TGenres = await res.json()
+
+	if (!res.ok) {
+		return notFound()
+	}
+	return data
+}
+
+const getMoviesList = async () => {
+	const url =
+		'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1'
+	const res = await fetch(url, options)
+
+	if (!res.ok) {
+		return notFound()
+	}
+
+	const data: TMovieList = await res.json()
+
+	// Uneven data sent -- data.result if success / data.success === false if failed fetch
 
 	return data
 }
 
 const List = async () => {
-	const data = await getMoviesList()
+	// TODO : Simplify genre function + add promise.all
+	const listData = await getMoviesList()
+	const { images: imagesConfig } = await getImageConfiguration()
+	const { genres } = await getGenres()
 
-	const { results, page, total_results, total_pages } = data
+	listData.results.forEach(
+		movie =>
+			(movie.genres = genres.filter(({ id }) =>
+				movie.genre_ids.includes(id),
+			)),
+	)
+
+	console.log(listData.results[0])
+
+	const { results, page, total_results, total_pages } = listData
 	return (
-		<div className="grid grid-cols-3">
-			{results.map(result => {
-				return <MovieCard key={result.id} />
+		<div className="grid grid-cols-5 gap-6">
+			{results.map(movie => {
+				return (
+					<Link key={movie.id} href={'/test'}>
+						<MovieCard
+							movieData={movie}
+							imageConfig={imagesConfig}
+						/>
+					</Link>
+				)
 			})}
 		</div>
 	)
