@@ -1,12 +1,5 @@
-import MovieCard from '@/ui/MovieCard'
+import List from '@/lib/ui/listMovies/List'
 
-const Home = () => (
-	<div className="grid grid-cols-3">
-		<MovieCard />
-		<MovieCard />
-		<MovieCard />
-		<MovieCard />
-	</div>
-)
+const Home = () => <List />
 
 export default Home
