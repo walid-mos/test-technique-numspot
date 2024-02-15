@@ -70,7 +70,7 @@ const List = async () => {
 
 	const { results, page, total_results, total_pages } = listData
 	return (
-		<div className="grid grid-cols-5 gap-6">
+		<div className="grid gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 			{results.map(movie => {
 				return (
 					<Link key={movie.id} href={'/test'}>
