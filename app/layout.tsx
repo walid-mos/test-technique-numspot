@@ -1,7 +1,10 @@
 import { Inter } from 'next/font/google'
 
+import '@/styles/globals.css'
+
+import Navbar from '@/ui/Navbar'
+
 import type { Metadata } from 'next'
-import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,7 +20,10 @@ const RootLayout = ({
 	children: React.ReactNode
 }>) => (
 	<html lang="en">
-		<body className={inter.className}>{children}</body>
+		<body className={inter.className}>
+			<Navbar />
+			<section className="mx-auto max-w-screen-xl">{children}</section>
+		</body>
 	</html>
 )
 
