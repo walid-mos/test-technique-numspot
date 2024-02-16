@@ -1,14 +1,10 @@
-import Image from 'next/image'
-
 import { HeartFilledIcon } from '@radix-ui/react-icons'
 
-import { posterUrlBuilder } from '@/functions/fetch'
-import { getImageConfiguration } from '@/server/config'
-import { placeholderSVG } from '@/components/Placeholder'
 import Rating from '@/ui/shared/Rating'
 import Credits from '@/ui/movie/Credits'
 import { Badge } from '@/components/Badge'
 import { getMovie } from '@/server/movies'
+import LoadImage from '@/ui/shared/LoadImage'
 
 type Props = {
 	params: {
@@ -17,28 +13,20 @@ type Props = {
 }
 
 const Movie: React.FC<Props> = async ({ params: { id } }) => {
-	const [movieDetails, imageConfig] = await Promise.all([
-		getMovie(id),
-		getImageConfiguration(),
-	])
-
-	const src = posterUrlBuilder(
-		imageConfig.images.base_url,
-		'original',
-		movieDetails.poster_path,
-	)
+	const movieDetails = await getMovie(id)
 
 	return (
 		<div className="grid items-start gap-6 py-6 md:grid-cols-2 lg:gap-12">
 			<div className="mr-4 hidden items-start md:flex">
-				<Image
-					src={src}
-					alt={`Movie ${movieDetails.title} poster`}
+				<LoadImage
+					type="movie"
+					path={movieDetails.poster_path}
+					size="original"
 					width={500}
 					height={750}
-					className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover "
+					name={movieDetails.title}
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					placeholder={`data:image/svg+xml;base64, ${Buffer.from(placeholderSVG).toString('base64')}`}
+					className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover "
 				/>
 			</div>
 			<div className="flex h-full flex-col justify-between gap-4">
@@ -48,7 +36,11 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 							{movieDetails.title}
 						</h1>
 						<div>
-							<p>{movieDetails.overview}</p>
+							<p>
+								{movieDetails.overview
+									? movieDetails.overview
+									: 'Aucune informations disponible sur ce titre'}
+							</p>
 						</div>
 						<div className="flex gap-2">
 							{movieDetails.genres.map(genre => (
@@ -71,10 +63,7 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 						</div>
 					</div>
 				</div>
-				<Credits
-					movieId={movieDetails.id}
-					imageConfig={imageConfig.images}
-				/>
+				<Credits movieId={movieDetails.id} />
 			</div>
 		</div>
 	)

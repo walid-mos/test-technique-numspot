@@ -8,14 +8,11 @@ import { getMovieCredits } from '@/server/movies'
 
 import CarouselPerson from './CarouselPerson'
 
-import type { ImageConfigurations } from '@/types/Config'
-
 type Props = {
-	imageConfig: ImageConfigurations
 	movieId: number
 }
 
-const Credits: React.FC<Props> = async ({ movieId, imageConfig }) => {
+const Credits: React.FC<Props> = async ({ movieId }) => {
 	const creditsData = await getMovieCredits(movieId)
 	const isCredit = creditsData.cast?.length || creditsData.crew?.length
 	if (!isCredit) return null
@@ -29,7 +26,6 @@ const Credits: React.FC<Props> = async ({ movieId, imageConfig }) => {
 						<CarouselPerson
 							key={`${person.id}cast`}
 							person={person}
-							imageConfig={imageConfig}
 							type="Cast"
 						/>
 					))}
@@ -37,7 +33,6 @@ const Credits: React.FC<Props> = async ({ movieId, imageConfig }) => {
 						<CarouselPerson
 							key={`${person.id}crew`}
 							person={person}
-							imageConfig={imageConfig}
 							type="Crew"
 						/>
 					))}

@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import { getMoviesList } from '@/server/movies'
-import { getGenres, getImageConfiguration } from '@/server/config'
+import { getGenres } from '@/server/config'
 
 import MovieCard from './MovieCard'
 import PaginationComponent from './Pagination'
@@ -15,9 +15,8 @@ type Props = {
 
 const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 	// TODO : Simplify genre function + add promise.all
-	const [moviesList, imagesConfig, genresConfig] = await Promise.all([
+	const [moviesList, genresConfig] = await Promise.all([
 		getMoviesList(currentPage, sortBy),
-		getImageConfiguration(),
 		getGenres(),
 	])
 
@@ -34,10 +33,7 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 			<div className="grid gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 				{results.map(movie => (
 					<Link key={movie.id} href={`/movies/${movie.id}`}>
-						<MovieCard
-							movieData={movie}
-							imageConfig={imagesConfig.images}
-						/>
+						<MovieCard movieData={movie} />
 					</Link>
 				))}
 			</div>

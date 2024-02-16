@@ -51,6 +51,8 @@ export const parseSortBy = (sort: string) => {
 
 export const posterUrlBuilder = (
 	baseUrl: string,
-	size: ImageConfigurations['poster_sizes'],
+	size:
+		| ImageConfigurations['poster_sizes']
+		| ImageConfigurations['profile_sizes'],
 	posterPath: string,
 ) => `${baseUrl}${size}${posterPath}`
