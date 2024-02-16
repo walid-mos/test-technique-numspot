@@ -5,7 +5,6 @@ import { getGenres, getImageConfiguration } from '@/server/config'
 
 import MovieCard from './MovieCard'
 import PaginationComponent from './Pagination'
-import Sort from './Sort'
 
 import type { TMoviesListSort } from '@/types/MovieList'
 
@@ -29,10 +28,9 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 		)
 	})
 
-	const { results, page, total_results: totalResults } = moviesList
+	const { results, page, total_pages: totalPages } = moviesList
 	return (
 		<>
-			<Sort page={currentPage} />
 			<div className="grid gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 				{results.map(movie => (
 					<Link key={movie.id} href="/test">
@@ -44,7 +42,11 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 				))}
 			</div>
 			<div className="mt-6">
-				<PaginationComponent page={page} sortBy={sortBy} />
+				<PaginationComponent
+					page={page}
+					totalPages={totalPages}
+					sortBy={sortBy}
+				/>
 			</div>
 		</>
 	)

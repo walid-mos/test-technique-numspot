@@ -15,21 +15,23 @@ import type { TMovieList, TMoviesListSort } from '@/types/MovieList'
 
 type Props = {
 	page: TMovieList['page']
+	totalPages: TMovieList['total_pages']
 	sortBy: TMoviesListSort
 }
 
-const LAST_PAGE = 500
+const DEFAULT_LAST_PAGE = 500
 
-const PaginationComponent: React.FC<Props> = async ({ page, sortBy }) => {
+const PaginationComponent: React.FC<Props> = async ({
+	page,
+	totalPages,
+	sortBy,
+}) => {
 	const isFirstPage = page === 1
-	const isLastPage = page === LAST_PAGE
+	const lastPage = sortBy.length ? totalPages : DEFAULT_LAST_PAGE
+	const isLastPage = page === lastPage
 
-	const href = (nextPage: TMovieList['page']) => {
-		const v = `/?${buildSearchParams(nextPage, sortBy)}`
-
-		console.log({ v })
-		return v
-	}
+	const getHref = (nextPage: TMovieList['page']) =>
+		`/?${buildSearchParams(nextPage, sortBy)}`
 
 	return (
 		<Pagination className="justify-end">
@@ -39,12 +41,12 @@ const PaginationComponent: React.FC<Props> = async ({ page, sortBy }) => {
 				) : (
 					<>
 						<PaginationItem>
-							<ButtonWithLink href={href(1)} variant="outline">
+							<ButtonWithLink href={getHref(1)} variant="outline">
 								Début
 							</ButtonWithLink>
 						</PaginationItem>
 						<PaginationItem>
-							<PaginationPrevious href={href(page - 1)} />
+							<PaginationPrevious href={getHref(page - 1)} />
 						</PaginationItem>
 					</>
 				)}
@@ -58,12 +60,12 @@ const PaginationComponent: React.FC<Props> = async ({ page, sortBy }) => {
 				) : (
 					<>
 						<PaginationItem>
-							<PaginationNext href={href(page + 1)} />
+							<PaginationNext href={getHref(page + 1)} />
 						</PaginationItem>
 						<PaginationItem>
 							<PaginationLink
 								className="w-16"
-								href={href(LAST_PAGE)}>
+								href={getHref(lastPage)}>
 								Fin
 							</PaginationLink>
 						</PaginationItem>

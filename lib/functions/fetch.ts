@@ -30,7 +30,7 @@ export const fetchApi = async <T>(url: string) => {
 
 export const buildSearchParams = (page: number, sortBy: TMoviesListSort) => {
 	const pageString = page ? `page=${page}` : `page=1`
-	if (!sortBy) return pageString
+	if (!sortBy.length) return pageString
 
 	const sortByString = `sort_by=${sortBy.join('.')}`
 
