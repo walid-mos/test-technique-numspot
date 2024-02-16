@@ -1,36 +1,42 @@
 import { StarIcon, StarFilledIcon, PersonIcon } from '@radix-ui/react-icons'
+
+import { cn } from '@/lib/functions/classnames'
+
 type Props = {
 	rate: number
 	voters: number
 }
 
 const Rating: React.FC<Props> = ({ rate, voters }) => {
-	const note = Math.round(rate / 2)
-
+	const rateFive = rate / 2
+	const rateInt = Math.round(rateFive)
 	const stars = new Map<number, React.ReactNode>()
 
 	for (let i = 0; i < 5; i++) {
-		if (i < note) {
-			stars.set(i, <StarFilledIcon className="h-4 w-4 text-yellow-400" />)
+		if (i < rateInt) {
+			stars.set(
+				i,
+				<StarFilledIcon key={i} className="h-4 w-4 text-yellow-400" />,
+			)
 		} else {
-			stars.set(i, <StarIcon className="h-4 w-4 text-muted-foreground" />)
+			stars.set(
+				i,
+				<StarIcon key={i} className="h-4 w-4 text-muted-foreground" />,
+			)
 		}
 	}
 
-	let ratingColor = 'text-xs font-bold'
-	if (note > 6) ratingColor + ' text-green-300'
-	else if (note > 3) ratingColor + ' text-yellow-300'
-	else if (note > 0) ratingColor + ' text-yellow-300'
+	let ratingColor = ''
+	if (rateFive > 3.5) ratingColor = `text-green-300`
+	else if (rateFive > 2) ratingColor = `text-yellow-300`
+	else if (rateFive > 0) ratingColor = `text-yellow-300`
 
-	console.log(ratingColor)
 	return (
 		<div className="grid flex-1 justify-end gap-0.5">
 			<div className="flex items-center text-sm">
-				{Array.from(stars).map(([, value]) => {
-					return value
-				})}
-				<span className="ml-2 w-4 text-xs font-bold text-muted-foreground">
-					{rate.toFixed(2)}{' '}
+				{Array.from(stars).map(([, value]) => value)}
+				<span className={cn('ml-2 w-4 text-xs font-bold', ratingColor)}>
+					{rateFive.toFixed(2)}{' '}
 				</span>
 			</div>
 			<div className="flex justify-end text-xs font-bold text-muted-foreground">

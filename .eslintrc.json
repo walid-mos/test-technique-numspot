@@ -3,6 +3,8 @@
     "eslint-config-mkw"
   ],
   "rules": {
-    "node/no-unpublished-import": false
+    "node/no-unpublished-import": [
+      0
+    ]
   }
 }

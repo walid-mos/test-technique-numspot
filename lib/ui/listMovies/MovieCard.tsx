@@ -1,9 +1,11 @@
+import Image from 'next/image'
+
 import { cn } from '@/functions/classnames'
 import { Card, CardContent, CardFooter } from '@/components/Card'
-// import Link from 'next/link'
 import { TMovie } from '@/lib/types/MovieList'
-import Image from 'next/image'
 import { ImageConfigurations } from '@/lib/types/Config'
+import { placeholderSVG } from '@/lib/components/Placeholder'
+
 import Rating from './Rating'
 
 type CardProps = React.ComponentProps<typeof Card> & {
@@ -12,27 +14,12 @@ type CardProps = React.ComponentProps<typeof Card> & {
 }
 
 const posterUrlBuilder = (
-	base_url: string,
+	baseUrl: string,
 	size: ImageConfigurations['poster_sizes'],
-	poster_path: string,
-) => {
-	return `${base_url}${size}${poster_path}`
-}
-// TODO : Better loader
-const svg = `
-<svg width="700" height="475" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<defs>
-<linearGradient id="g">
-<stop stop-color="#333" offset="20%" />
-<stop stop-color="#222" offset="50%" />
-<stop stop-color="#333" offset="70%" />
-</linearGradient>
-</defs>
-<rect width="700" height="475" fill="#333" />
-<rect id="r" width="700" height="475" fill="url(#g)" />
-<animate xlink:href="#r" attributeName="x" from="-700" to="700" dur="1s" repeatCount="indefinite"  />
-</svg>`
+	posterPath: string,
+) => `${baseUrl}${size}${posterPath}`
 
+// TODO : Better loader
 const MovieCard = async ({
 	movieData,
 	imageConfig,
@@ -58,7 +45,7 @@ const MovieCard = async ({
 					alt={`Movie ${movieData.title} poster`}
 					className="rounded-t-lg "
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-					placeholder={`data:image/svg+xml;base64, ${Buffer.from(svg).toString('base64')}`}
+					placeholder={`data:image/svg+xml;base64, ${Buffer.from(placeholderSVG).toString('base64')}`}
 					fill
 				/>
 			</CardContent>

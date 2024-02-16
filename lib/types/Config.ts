@@ -1,5 +1,3 @@
-import { TApiResponse } from './Global'
-
 export type ImageConfigurations = {
 	base_url: string
 	secure_base_url: string
