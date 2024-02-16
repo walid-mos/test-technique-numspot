@@ -1,9 +1,10 @@
 /* eslint-disable import/prefer-default-export */
-import { fetchApi } from '@/functions/fetch'
+import { buildSearchParams, fetchApi } from '@/functions/fetch'
 
-import type { TMovieList } from '@/types/MovieList'
+import type { TMovieList, TMoviesListSort } from '@/types/MovieList'
 
-export const getMoviesList = async (page: number) => {
-	const url = `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`
+export const getMoviesList = async (page: number, sortBy: TMoviesListSort) => {
+	const searchParams = buildSearchParams(page, sortBy)
+	const url = `https://api.themoviedb.org/3/${sortBy.length ? 'discover/movie' : 'movie/popular'}?language=en-US&${searchParams}`
 	return fetchApi<TMovieList>(url)
 }

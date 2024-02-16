@@ -1,4 +1,12 @@
+import { authorizedSort, authorizedSortType } from '../constants'
 import { TGenres } from './Config'
+
+export type TMoviesListSortKey = (typeof authorizedSort)[number]
+export type TMoviesListSortValues = (typeof authorizedSortType)[number]
+
+export type TMoviesListSort =
+	| [TMoviesListSortKey, TMoviesListSortValues]
+	| never[]
 
 export type TMovie = {
 	adult: boolean

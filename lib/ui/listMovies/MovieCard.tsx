@@ -2,9 +2,9 @@ import Image from 'next/image'
 
 import { cn } from '@/functions/classnames'
 import { Card, CardContent, CardFooter } from '@/components/Card'
-import { TMovie } from '@/lib/types/MovieList'
-import { ImageConfigurations } from '@/lib/types/Config'
-import { placeholderSVG } from '@/lib/components/Placeholder'
+import { TMovie } from '@/types/MovieList'
+import { ImageConfigurations } from '@/types/Config'
+import { placeholderSVG } from '@/components/Placeholder'
 
 import Rating from './Rating'
 

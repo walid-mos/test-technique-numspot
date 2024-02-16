@@ -22,11 +22,11 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ],
       "@/components/*": [
         "./lib/components/*"
+      ],
+      "@/server/*": [
+        "./lib/server/*"
       ],
       "@/ui/*": [
         "./lib/ui/*"
@@ -34,11 +34,14 @@
       "@/functions/*": [
         "./lib/functions/*"
       ],
-      "@/styles/*": [
-        "./styles/*"
+      "@/actions/*": [
+        "./lib/actions/*"
       ],
       "@/types/*": [
         "./lib/types/*"
+      ],
+      "@/styles/*": [
+        "./styles/*"
       ]
     }
   },

@@ -1,19 +1,23 @@
 import Link from 'next/link'
 
-import { getMoviesList } from '@/lib/server/movies'
-import { getGenres, getImageConfiguration } from '@/lib/server/config'
+import { getMoviesList } from '@/server/movies'
+import { getGenres, getImageConfiguration } from '@/server/config'
 
 import MovieCard from './MovieCard'
 import PaginationComponent from './Pagination'
+import Sort from './Sort'
+
+import type { TMoviesListSort } from '@/types/MovieList'
 
 type Props = {
 	currentPage: number
+	sortBy: TMoviesListSort
 }
 
-const List: React.FC<Props> = async ({ currentPage }) => {
+const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 	// TODO : Simplify genre function + add promise.all
 	const [moviesList, imagesConfig, genresConfig] = await Promise.all([
-		getMoviesList(currentPage),
+		getMoviesList(currentPage, sortBy),
 		getImageConfiguration(),
 		getGenres(),
 	])
@@ -28,6 +32,7 @@ const List: React.FC<Props> = async ({ currentPage }) => {
 	const { results, page, total_results: totalResults } = moviesList
 	return (
 		<>
+			<Sort page={currentPage} />
 			<div className="grid gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 				{results.map(movie => (
 					<Link key={movie.id} href="/test">
@@ -39,7 +44,7 @@ const List: React.FC<Props> = async ({ currentPage }) => {
 				))}
 			</div>
 			<div className="mt-6">
-				<PaginationComponent page={page} />
+				<PaginationComponent page={page} sortBy={sortBy} />
 			</div>
 		</>
 	)

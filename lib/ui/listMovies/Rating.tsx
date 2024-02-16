@@ -1,6 +1,6 @@
 import { StarIcon, StarFilledIcon, PersonIcon } from '@radix-ui/react-icons'
 
-import { cn } from '@/lib/functions/classnames'
+import { cn } from '@/functions/classnames'
 
 type Props = {
 	rate: number

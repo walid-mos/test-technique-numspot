@@ -8,3 +8,6 @@ const mandatoryEnvCheck = (envVariable: string | undefined) => {
 
 export const API_KEY = mandatoryEnvCheck(process.env.TMDB_API_KEY)
 export const API_TOKEN = mandatoryEnvCheck(process.env.TMDB_API_TOKEN)
+
+export const authorizedSort = ['title', 'popularity', 'vote_average'] as const
+export const authorizedSortType = ['asc', 'desc'] as const

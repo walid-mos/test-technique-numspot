@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { forwardRef } from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
@@ -53,6 +55,16 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 		)
 	},
 )
+
+const ButtonWithLink = forwardRef<
+	HTMLButtonElement,
+	ButtonProps & { href: string; children: React.ReactNode }
+>(({ href, children, ...props }, ref) => (
+	<Button ref={ref} asChild {...props}>
+		<Link href={href}>{children}</Link>
+	</Button>
+))
+
 Button.displayName = 'Button'
 
-export { Button, buttonVariants }
+export { Button, ButtonWithLink, buttonVariants }

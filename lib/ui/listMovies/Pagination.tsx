@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import {
 	Pagination,
 	PaginationContent,
@@ -5,19 +7,30 @@ import {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
-} from '@/lib/components/Pagination'
+} from '@/components/Pagination'
+import { buildSearchParams } from '@/functions/fetch'
+import { ButtonWithLink } from '@/components/Button'
 
-import type { TMovieList } from '@/lib/types/MovieList'
+import type { TMovieList, TMoviesListSort } from '@/types/MovieList'
 
 type Props = {
 	page: TMovieList['page']
+	sortBy: TMoviesListSort
 }
 
 const LAST_PAGE = 500
 
-const PaginationComponent: React.FC<Props> = async ({ page }) => {
+const PaginationComponent: React.FC<Props> = async ({ page, sortBy }) => {
 	const isFirstPage = page === 1
 	const isLastPage = page === LAST_PAGE
+
+	const href = (nextPage: TMovieList['page']) => {
+		const v = `/?${buildSearchParams(nextPage, sortBy)}`
+
+		console.log({ v })
+		return v
+	}
+
 	return (
 		<Pagination className="justify-end">
 			<PaginationContent>
@@ -26,12 +39,12 @@ const PaginationComponent: React.FC<Props> = async ({ page }) => {
 				) : (
 					<>
 						<PaginationItem>
-							<PaginationLink className="w-16" href="/?page=1">
+							<ButtonWithLink href={href(1)} variant="outline">
 								Début
-							</PaginationLink>
+							</ButtonWithLink>
 						</PaginationItem>
 						<PaginationItem>
-							<PaginationPrevious href={`/?page=${page - 1}`} />
+							<PaginationPrevious href={href(page - 1)} />
 						</PaginationItem>
 					</>
 				)}
@@ -45,12 +58,12 @@ const PaginationComponent: React.FC<Props> = async ({ page }) => {
 				) : (
 					<>
 						<PaginationItem>
-							<PaginationNext href={`/?page=${page + 1}`} />
+							<PaginationNext href={href(page + 1)} />
 						</PaginationItem>
 						<PaginationItem>
 							<PaginationLink
 								className="w-16"
-								href={`/?page=${LAST_PAGE}`}>
+								href={href(LAST_PAGE)}>
 								Fin
 							</PaginationLink>
 						</PaginationItem>
