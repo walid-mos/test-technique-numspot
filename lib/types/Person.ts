@@ -1,13 +1,13 @@
-export type TCast = {
+export type TMovieCredit = {
 	adult: boolean
-	backdrop_path: string | null
+	backdrop_path: null | string
 	genre_ids: number[]
 	id: number
 	original_language: string
 	original_title: string
 	overview: string
 	popularity: number
-	poster_path: string | null
+	poster_path: null | string
 	release_date: string
 	title: string
 	video: boolean
@@ -18,16 +18,16 @@ export type TCast = {
 	order: number
 }
 
-export type TCrew = {
+export type TCrewCredit = {
 	adult: boolean
-	backdrop_path: string | null
+	backdrop_path: null | string
 	genre_ids: number[]
 	id: number
 	original_language: string
 	original_title: string
 	overview: string
 	popularity: number
-	poster_path: string | null
+	poster_path: null | string
 	release_date: string
 	title: string
 	video: boolean
@@ -38,9 +38,9 @@ export type TCrew = {
 	job: string
 }
 
-export type TCredits = {
-	cast: TCast[]
-	crew: TCrew[]
+export type TMovieCredits = {
+	cast: TMovieCredit[]
+	crew: TCrewCredit[]
 }
 
 export type TProfile = {
@@ -72,6 +72,6 @@ export type TPerson = {
 	place_of_birth: string
 	popularity: number
 	profile_path: string
-	credits: TCredits
+	movie_credits: TMovieCredits
 	images: TImages
 }

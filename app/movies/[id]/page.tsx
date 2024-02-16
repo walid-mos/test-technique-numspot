@@ -15,7 +15,6 @@ type Props = {
 
 const Movie: React.FC<Props> = async ({ params: { id } }) => {
 	const movieDetails = await getMovie(id)
-	console.log({ movieDetails })
 
 	return (
 		<div className="grid items-start gap-6 py-6 md:grid-cols-2 lg:gap-12">
@@ -38,7 +37,7 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 							{movieDetails.title}
 						</h1>
 						<div>
-							<p>
+							<p className="text-sm text-slate-700">
 								{movieDetails.overview
 									? movieDetails.overview
 									: 'Aucune informations disponible sur ce titre'}
@@ -66,7 +65,7 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 					</div>
 				</div>
 				<div>
-					<div className="flex flex-col gap-2">
+					<div className="mb-4 flex flex-col gap-2">
 						{movieDetails.homepage ? (
 							<ButtonWithLink
 								variant="outline"
@@ -82,7 +81,7 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 							</ButtonWithLink>
 						) : null}
 					</div>
-					<Credits movieId={movieDetails.id} />
+					<Credits credits={movieDetails.credits} />
 				</div>
 			</div>
 		</div>

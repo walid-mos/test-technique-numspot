@@ -1,5 +1,9 @@
+import { HeartFilledIcon } from '@radix-ui/react-icons'
+
+import { ButtonWithLink } from '@/components/Button'
 import { placeholderSVG } from '@/components/Placeholder'
 import { getPerson } from '@/server/person'
+import Credits from '@/ui/person/Credits'
 import LoadImage from '@/ui/shared/LoadImage'
 
 type Props = {
@@ -13,7 +17,7 @@ const Person: React.FC<Props> = async ({ params: { id } }) => {
 
 	return (
 		<div className="grid items-start gap-6 py-6 md:grid-cols-2 lg:gap-12">
-			<div className="mr-12 hidden items-start md:flex">
+			<div className="mr-4 hidden items-start md:flex">
 				<LoadImage
 					type="person"
 					name={personDetails.name}
@@ -31,7 +35,33 @@ const Person: React.FC<Props> = async ({ params: { id } }) => {
 						<h1 className="text-3xl font-bold lg:text-5xl">
 							{personDetails.name}
 						</h1>
+						<div>
+							<p className="text-sm text-slate-700">
+								{personDetails.biography
+									? personDetails.biography
+									: 'Aucune informations disponible sur cette personne'}
+							</p>
+						</div>
+						<div className="flex items-center gap-2 text-xs">
+							<HeartFilledIcon className="text-red-400" />
+							<div className="font-bold text-muted-foreground">
+								{personDetails.popularity.toFixed(1)}
+							</div>
+						</div>
 					</div>
+				</div>
+
+				<div>
+					<div className="mb-4 flex flex-col gap-2">
+						{personDetails.imdb_id ? (
+							<ButtonWithLink
+								variant="outline"
+								href={`https://www.imdb.com/title/${personDetails.imdb_id}`}>
+								Voir les infos du film sur IMDB
+							</ButtonWithLink>
+						) : null}
+					</div>
+					<Credits movieCredits={personDetails.movie_credits} />
 				</div>
 			</div>
 		</div>
