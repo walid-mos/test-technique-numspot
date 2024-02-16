@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { API_TOKEN, authorizedSort, authorizedSortType } from '../constants'
 
+import type { ImageConfigurations } from '@/types/Config'
 import type { TMoviesListSort } from '@/types/MovieList'
 
 const options = {
@@ -47,3 +48,9 @@ export const parseSortBy = (sort: string) => {
 		return []
 	return sortedArray as TMoviesListSort
 }
+
+export const posterUrlBuilder = (
+	baseUrl: string,
+	size: ImageConfigurations['poster_sizes'],
+	posterPath: string,
+) => `${baseUrl}${size}${posterPath}`

@@ -14,10 +14,11 @@ const Home: React.FC<Props> = ({ searchParams: { page, sort_by } }) => {
 	const currentPage = Number.parseInt(page, 10) || 1
 	const sortBy = parseSortBy(sort_by)
 
-	const title = sortBy.length ? 'Tout les films' : 'Les plus populaires'
 	return (
 		<>
-			<h3 className="text-xl font-bold text-slate-800"> {title} </h3>
+			<h3 className="text-xl font-bold text-slate-800">
+				Les plus populaires
+			</h3>
 			<Sort page={currentPage} />
 			<List currentPage={currentPage} sortBy={sortBy} />
 		</>

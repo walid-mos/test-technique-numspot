@@ -28,12 +28,12 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 		)
 	})
 
-	const { results, page, total_pages: totalPages } = moviesList
+	const { results, page } = moviesList
 	return (
 		<>
 			<div className="grid gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
 				{results.map(movie => (
-					<Link key={movie.id} href="/test">
+					<Link key={movie.id} href={`/movies/${movie.id}`}>
 						<MovieCard
 							movieData={movie}
 							imageConfig={imagesConfig.images}
@@ -42,11 +42,7 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 				))}
 			</div>
 			<div className="mt-6">
-				<PaginationComponent
-					page={page}
-					totalPages={totalPages}
-					sortBy={sortBy}
-				/>
+				<PaginationComponent page={page} sortBy={sortBy} />
 			</div>
 		</>
 	)

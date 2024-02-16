@@ -2,24 +2,19 @@ import Image from 'next/image'
 
 import { cn } from '@/functions/classnames'
 import { Card, CardContent, CardFooter } from '@/components/Card'
-import { TMovie } from '@/types/MovieList'
-import { ImageConfigurations } from '@/types/Config'
 import { placeholderSVG } from '@/components/Placeholder'
+import { posterUrlBuilder } from '@/functions/fetch'
 
 import Rating from './Rating'
+
+import type { ImageConfigurations } from '@/types/Config'
+import type { TMovie } from '@/types/MovieList'
 
 type CardProps = React.ComponentProps<typeof Card> & {
 	movieData: TMovie
 	imageConfig: ImageConfigurations
 }
 
-const posterUrlBuilder = (
-	baseUrl: string,
-	size: ImageConfigurations['poster_sizes'],
-	posterPath: string,
-) => `${baseUrl}${size}${posterPath}`
-
-// TODO : Better loader
 const MovieCard = async ({
 	movieData,
 	imageConfig,
@@ -28,7 +23,7 @@ const MovieCard = async ({
 }: CardProps) => {
 	const src = posterUrlBuilder(
 		imageConfig.base_url,
-		'original',
+		'w185',
 		movieData.poster_path,
 	)
 
