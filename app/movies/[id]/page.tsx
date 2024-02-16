@@ -5,6 +5,7 @@ import Credits from '@/ui/movie/Credits'
 import { Badge } from '@/components/Badge'
 import { getMovie } from '@/server/movies'
 import LoadImage from '@/ui/shared/LoadImage'
+import { ButtonWithLink } from '@/components/Button'
 
 type Props = {
 	params: {
@@ -14,6 +15,7 @@ type Props = {
 
 const Movie: React.FC<Props> = async ({ params: { id } }) => {
 	const movieDetails = await getMovie(id)
+	console.log({ movieDetails })
 
 	return (
 		<div className="grid items-start gap-6 py-6 md:grid-cols-2 lg:gap-12">
@@ -63,7 +65,25 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 						</div>
 					</div>
 				</div>
-				<Credits movieId={movieDetails.id} />
+				<div>
+					<div className="flex flex-col gap-2">
+						{movieDetails.homepage ? (
+							<ButtonWithLink
+								variant="outline"
+								href={movieDetails.homepage}>
+								Voir le site du film
+							</ButtonWithLink>
+						) : null}
+						{movieDetails.imdb_id ? (
+							<ButtonWithLink
+								variant="outline"
+								href={`https://www.imdb.com/title/${movieDetails.imdb_id}`}>
+								Voir les infos du film sur IMDB
+							</ButtonWithLink>
+						) : null}
+					</div>
+					<Credits movieId={movieDetails.id} />
+				</div>
 			</div>
 		</div>
 	)

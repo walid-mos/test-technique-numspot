@@ -6,6 +6,7 @@ import { ImageConfigurations } from '@/types/Config'
 import PlaceholderPerson from '@/public/placeholder-person.png'
 import PlaceholderMovie from '@/public/placeholder-movie.png'
 import { getImageConfiguration } from '@/server/config'
+import { cn } from '@/functions/classnames'
 
 type Props = {
 	path: string | null | undefined
@@ -36,6 +37,7 @@ const LoadImage: React.FC<LoadImageProps> = async ({
 	size,
 	name,
 	type,
+	className,
 	...props
 }) => {
 	const { images: imageConfig } = await getImageConfiguration()
@@ -44,7 +46,10 @@ const LoadImage: React.FC<LoadImageProps> = async ({
 
 	return (
 		<Image
-			className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover "
+			className={cn(
+				'aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover ',
+				className,
+			)}
 			{...props}
 			alt={`${name} poster`}
 			src={src}
