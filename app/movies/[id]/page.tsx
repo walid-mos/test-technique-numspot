@@ -1,12 +1,14 @@
 import Image from 'next/image'
 
-import { fetchApi, posterUrlBuilder } from '@/functions/fetch'
+import { HeartFilledIcon } from '@radix-ui/react-icons'
+
+import { posterUrlBuilder } from '@/functions/fetch'
 import { getImageConfiguration } from '@/server/config'
 import { placeholderSVG } from '@/components/Placeholder'
-
-import { API_KEY } from '../../../lib/constants'
-
-import type { TMovieDetails } from '@/types/Movie'
+import Rating from '@/ui/shared/Rating'
+import Credits from '@/ui/movie/Credits'
+import { Badge } from '@/components/Badge'
+import { getMovie } from '@/server/movies'
 
 type Props = {
 	params: {
@@ -14,18 +16,6 @@ type Props = {
 	}
 }
 
-const getMovie = async (movieId: number) => {
-	const url = `https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}&append_to_response=keywords,alternative_titles,changes,credits,images,keywords,lists,releases,reviews,similar,translations,videos`
-
-	return fetchApi<TMovieDetails>(url)
-}
-
-// <div className="flex flex-1">
-// 	<h3 className="text-xl font-bold text-slate-800">
-// 		{movieDetails.title}
-// 	</h3>
-// 	PICTURE RESUME CREDIT SLIDER
-// </div>
 const Movie: React.FC<Props> = async ({ params: { id } }) => {
 	const [movieDetails, imageConfig] = await Promise.all([
 		getMovie(id),
@@ -39,8 +29,8 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 	)
 
 	return (
-		<div className="mx-auto grid max-w-6xl items-start gap-6 px-4 py-6 md:grid-cols-2 lg:gap-12">
-			<div className="hidden items-start md:flex">
+		<div className="grid items-start gap-6 py-6 md:grid-cols-2 lg:gap-12">
+			<div className="mr-4 hidden items-start md:flex">
 				<Image
 					src={src}
 					alt={`Movie ${movieDetails.title} poster`}
@@ -51,82 +41,40 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 					placeholder={`data:image/svg+xml;base64, ${Buffer.from(placeholderSVG).toString('base64')}`}
 				/>
 			</div>
-			<div className="grid items-start gap-4">
+			<div className="flex h-full flex-col justify-between gap-4">
 				<div className="flex items-start">
 					<div className="grid gap-4">
-						<h1 className="font-sans text-3xl font-bold lg:text-4xl">
+						<h1 className="text-3xl font-bold lg:text-5xl">
 							{movieDetails.title}
 						</h1>
 						<div>
-							<p>
-								When his job along with that of his co-worker
-								are threatened, Walter takes action in the real
-								world embarking on a global journey that turns
-								into an adventure more extraordinary than
-								anything he could have ever imagined.
-							</p>
+							<p>{movieDetails.overview}</p>
 						</div>
-					</div>
-				</div>
-				<div className="flex items-start">
-					<div className="grid gap-4 md:gap-10">
-						<h2 className="text-xl font-bold sm:text-2xl">
-							Actors
-						</h2>
-						<div className="w-full overflow-hidden rounded-lg border dark:border-gray-800">
-							<div className="flex gap-4 p-4 md:p-6">
-								<div className="grid gap-2 text-center">
-									<img
-										alt="Actor"
-										className="aspect-square rounded-full border object-cover dark:border-gray-800"
-										height={150}
-										src="/placeholder.svg"
-										width={150}
-									/>
-									<p className="text-sm font-medium leading-none">
-										Ben Stiller
-									</p>
-								</div>
-								<div className="grid gap-2 text-center">
-									<img
-										alt="Actor"
-										className="aspect-square rounded-full border object-cover dark:border-gray-800"
-										height={150}
-										src="/placeholder.svg"
-										width={150}
-									/>
-									<p className="text-sm font-medium leading-none">
-										Kristen Wiig
-									</p>
-								</div>
-								<div className="grid gap-2 text-center">
-									<img
-										alt="Actor"
-										className="aspect-square rounded-full border object-cover dark:border-gray-800"
-										height={150}
-										src="/placeholder.svg"
-										width={150}
-									/>
-									<p className="text-sm font-medium leading-none">
-										Shirley MacLaine
-									</p>
-								</div>
-								<div className="grid gap-2 text-center">
-									<img
-										alt="Actor"
-										className="aspect-square rounded-full border object-cover dark:border-gray-800"
-										height={150}
-										src="/placeholder.svg"
-										width={150}
-									/>
-									<p className="text-sm font-medium leading-none">
-										Adam Scott
-									</p>
+						<div className="flex gap-2">
+							{movieDetails.genres.map(genre => (
+								<Badge key={genre.id} variant="outline">
+									{genre.name}
+								</Badge>
+							))}
+						</div>
+						<div className="grid gap-4">
+							<Rating
+								rate={movieDetails.vote_average}
+								voters={movieDetails.vote_count}
+							/>
+							<div className="flex items-center gap-2 text-xs">
+								<HeartFilledIcon className="text-red-400" />
+								<div className="font-bold text-muted-foreground">
+									{movieDetails.popularity.toFixed(1)}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				<Credits
+					movieId={movieDetails.id}
+					imageConfig={imageConfig.images}
+				/>
 			</div>
 		</div>
 	)

@@ -4,8 +4,7 @@ import { cn } from '@/functions/classnames'
 import { Card, CardContent, CardFooter } from '@/components/Card'
 import { placeholderSVG } from '@/components/Placeholder'
 import { posterUrlBuilder } from '@/functions/fetch'
-
-import Rating from './Rating'
+import Rating from '@/ui/shared/Rating'
 
 import type { ImageConfigurations } from '@/types/Config'
 import type { TMovie } from '@/types/MovieList'
@@ -23,7 +22,7 @@ const MovieCard = async ({
 }: CardProps) => {
 	const src = posterUrlBuilder(
 		imageConfig.base_url,
-		'w185',
+		'w500',
 		movieData.poster_path,
 	)
 
@@ -34,14 +33,14 @@ const MovieCard = async ({
 				className,
 			)}
 			{...props}>
-			<CardContent className="relative block h-72 object-contain px-0 py-2">
+			<CardContent className="object-contain px-0 py-2">
 				<Image
 					src={src}
 					alt={`Movie ${movieData.title} poster`}
-					className="rounded-t-lg "
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+					className="aspect-[2/3] rounded-t-lg"
 					placeholder={`data:image/svg+xml;base64, ${Buffer.from(placeholderSVG).toString('base64')}`}
-					fill
+					width={500}
+					height={750}
 				/>
 			</CardContent>
 			<CardFooter>
@@ -49,20 +48,18 @@ const MovieCard = async ({
 					<h3 className="line-clamp-2 h-14 pt-2 text-base font-semibold">
 						{movieData.title}
 					</h3>
-					<div className="flex items-center justify-between gap-2">
-						<div>
-							<p className="h-9 overflow-scroll text-xs text-gray-500">
-								{movieData.genres
-									?.map(({ name }) => name)
-									.join(' ')}
-							</p>
-						</div>
-						<div className="w-2/3">
-							<Rating
-								rate={movieData.vote_average}
-								voters={movieData.vote_count}
-							/>
-						</div>
+					<div>
+						<p className="line-clamp-2 h-8 overflow-scroll text-xs text-gray-500">
+							{movieData.genres
+								?.map(({ name }) => name)
+								.join(' / ')}
+						</p>
+					</div>
+					<div className="grid gap-0.5">
+						<Rating
+							rate={movieData.vote_average}
+							voters={movieData.vote_count}
+						/>
 					</div>
 				</div>
 			</CardFooter>

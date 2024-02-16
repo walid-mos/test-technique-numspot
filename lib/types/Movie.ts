@@ -55,3 +55,35 @@ export type TMovieDetails = {
 	vote_average: number
 	vote_count: number
 }
+
+type TGender = 0 | 1 | 2
+
+export type TPerson = {
+	adult: boolean
+	gender: TGender
+	id: number
+	known_for_department: string
+	name: string
+	original_name: string
+	popularity: number
+	profile_path: string | null
+}
+
+export type TCastMember = TPerson & {
+	cast_id: number
+	character: string
+	credit_id: string
+	order: number
+}
+
+export type TCrewMember = TPerson & {
+	credit_id: string
+	department: string
+	job: string
+}
+
+export type TMovieCredits = {
+	id: number
+	cast: TCastMember[]
+	crew: TCrewMember[]
+}
