@@ -41,6 +41,7 @@ const MovieCard = async ({ movieData, className, ...props }: CardProps) => (
 					<Rating
 						rate={movieData.vote_average}
 						voters={movieData.vote_count}
+						popularity={movieData.popularity}
 					/>
 				</div>
 			</div>

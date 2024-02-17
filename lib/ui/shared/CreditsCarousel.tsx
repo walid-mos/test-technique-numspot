@@ -8,7 +8,7 @@ import {
 } from '@/components/Carousel'
 
 const CreditCarousel: React.FC<React.PropsWithChildren> = ({ children }) => (
-	<Carousel className="w-full max-w-2xl md:max-w-xl">
+	<Carousel className="w-full">
 		<CarouselContent className="-ml-1">{children}</CarouselContent>
 		<CarouselPrevious />
 		<CarouselNext />

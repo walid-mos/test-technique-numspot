@@ -7,7 +7,7 @@ const Navbar = () => (
 	<header className="border-b bg-white">
 		<nav className="mx-auto flex h-16 max-w-screen-xl items-center">
 			<div className="flex gap-2 ">
-				<Link className="flex items-center gap-2" href="#">
+				<Link className="flex items-center gap-2" href="/">
 					<Image
 						src="/logo.svg"
 						alt="MyIMDB Logo"

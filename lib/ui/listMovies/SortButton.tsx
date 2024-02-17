@@ -1,17 +1,23 @@
 import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 
 import { Button } from '@/components/Button'
-import { TMoviesListSortKey, TMoviesListSortValues } from '@/types/MovieList'
+
+import type {
+	TMoviesListSortKey,
+	TMoviesListSortValues,
+} from '@/types/MovieList'
 
 type Props = {
 	label: string
 	value: TMoviesListSortKey
+	icon: React.ReactNode
 	handleClick: (key: TMoviesListSortKey, value: TMoviesListSortValues) => void
 }
 
-const SortButton: React.FC<Props> = ({ label, value, handleClick }) => (
+const SortButton: React.FC<Props> = ({ label, value, icon, handleClick }) => (
 	<div className="inline-flex h-8 rounded-md text-xs shadow-sm" role="group">
-		<div className="rounded-none rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-xs text-gray-900">
+		<div className="flex justify-between gap-2 rounded-none rounded-s-lg border border-gray-200 bg-white px-4 py-2 text-xs text-gray-900">
+			{icon}
 			{label}
 		</div>
 		<Button

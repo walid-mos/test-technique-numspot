@@ -12,7 +12,7 @@ type Props = {
 }
 
 const CarouselMovie: React.FC<Props> = ({ movie, type }) => (
-	<CarouselItem className="basis-1/2 pl-1 md:basis-1/3 lg:basis-1/4">
+	<CarouselItem className="w-1 basis-1/2 pl-1 md:basis-1/3 lg:basis-1/4">
 		<Link href={`/movies/${movie.id}`}>
 			<div className="p-1">
 				<Card>
@@ -36,7 +36,7 @@ const CarouselMovie: React.FC<Props> = ({ movie, type }) => (
 							height={750}
 							name={movie.title}
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-							className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover "
+							className="aspect-[2/3] overflow-hidden rounded-lg border border-gray-200 object-cover "
 						/>
 					</CardContent>
 				</Card>

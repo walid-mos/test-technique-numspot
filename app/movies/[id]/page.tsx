@@ -23,6 +23,7 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 					type="movie"
 					path={movieDetails.poster_path}
 					size="original"
+					priority
 					width={500}
 					height={750}
 					name={movieDetails.title}
@@ -33,6 +34,9 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 			<div className="flex h-full flex-col justify-between gap-4">
 				<div className="flex items-start">
 					<div className="grid gap-4">
+						<h4 className="text-lg font-extrabold text-muted-foreground">
+							Film
+						</h4>
 						<h1 className="text-3xl font-bold lg:text-5xl">
 							{movieDetails.title}
 						</h1>
@@ -54,13 +58,8 @@ const Movie: React.FC<Props> = async ({ params: { id } }) => {
 							<Rating
 								rate={movieDetails.vote_average}
 								voters={movieDetails.vote_count}
+								popularity={movieDetails.popularity}
 							/>
-							<div className="flex items-center gap-2 text-xs">
-								<HeartFilledIcon className="text-red-400" />
-								<div className="font-bold text-muted-foreground">
-									{movieDetails.popularity.toFixed(1)}
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

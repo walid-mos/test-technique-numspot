@@ -1,5 +1,11 @@
 'use client'
 
+import {
+	HeartFilledIcon,
+	LetterCaseCapitalizeIcon,
+	StarFilledIcon,
+} from '@radix-ui/react-icons'
+
 import { Button } from '@/components/Button'
 import { revalidateListMovies } from '@/actions/listMovies'
 
@@ -31,16 +37,23 @@ const Sort: React.FC<Props> = ({ page }) => {
 
 	return (
 		<div className="my-4 flex justify-end gap-4">
-			<SortButton label="Titre" value="title" handleClick={handleClick} />
+			<SortButton
+				label="Titre"
+				icon={<LetterCaseCapitalizeIcon className="text-slate-700" />}
+				value="title"
+				handleClick={handleClick}
+			/>
 			<SortButton
 				label="Popularité"
 				value="popularity"
+				icon={<HeartFilledIcon className="text-red-500" />}
 				handleClick={handleClick}
 			/>
 			<SortButton
 				label="Votes"
 				value="vote_average"
 				handleClick={handleClick}
+				icon={<StarFilledIcon className="text-yellow-500" />}
 			/>
 			<Button size="sm" onClick={handleReset}>
 				Supprimer les filtres

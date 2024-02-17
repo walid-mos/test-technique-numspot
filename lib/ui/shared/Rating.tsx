@@ -1,13 +1,19 @@
-import { StarIcon, StarFilledIcon, PersonIcon } from '@radix-ui/react-icons'
+import {
+	StarIcon,
+	StarFilledIcon,
+	PersonIcon,
+	HeartFilledIcon,
+} from '@radix-ui/react-icons'
 
 import { cn } from '@/functions/classnames'
 
 type Props = {
 	rate: number
 	voters: number
+	popularity: number
 }
 
-const Rating: React.FC<Props> = ({ rate, voters }) => {
+const Rating: React.FC<Props> = ({ rate, voters, popularity }) => {
 	const rateFive = rate / 2
 	const rateInt = Math.round(rateFive)
 	const stars = new Map<number, React.ReactNode>()
@@ -27,9 +33,9 @@ const Rating: React.FC<Props> = ({ rate, voters }) => {
 	}
 
 	let ratingColor = ''
-	if (rateFive > 3.5) ratingColor = `text-green-300`
-	else if (rateFive > 2) ratingColor = `text-yellow-300`
-	else if (rateFive > 0) ratingColor = `text-yellow-300`
+	if (rateFive > 3.5) ratingColor = `text-green-500`
+	else if (rateFive > 2) ratingColor = `text-yellow-500`
+	else if (rateFive >= 0) ratingColor = `text-red-500`
 
 	return (
 		<>
@@ -43,6 +49,12 @@ const Rating: React.FC<Props> = ({ rate, voters }) => {
 				<div className="flex">
 					<PersonIcon className="font-normal" />
 					<span className="ml-2 w-4 text-end">{voters}</span>
+				</div>
+			</div>
+			<div className="flex text-xs font-bold text-muted-foreground">
+				<div className="flex">
+					<HeartFilledIcon className="text-red-500" />
+					<span className="ml-2 w-4 text-end">{popularity}</span>
 				</div>
 			</div>
 		</>

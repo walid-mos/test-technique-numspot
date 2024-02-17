@@ -23,6 +23,7 @@ const Person: React.FC<Props> = async ({ params: { id } }) => {
 					name={personDetails.name}
 					path={personDetails.profile_path}
 					width={500}
+					priority
 					height={750}
 					className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 object-cover "
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -32,6 +33,9 @@ const Person: React.FC<Props> = async ({ params: { id } }) => {
 			<div className="flex h-full flex-col justify-between gap-4">
 				<div className="flex items-start">
 					<div className="grid gap-4">
+						<h4 className="text-lg font-extrabold text-muted-foreground">
+							{personDetails.gender === 2 ? 'Acteur' : 'Actrice'}
+						</h4>
 						<h1 className="text-3xl font-bold lg:text-5xl">
 							{personDetails.name}
 						</h1>

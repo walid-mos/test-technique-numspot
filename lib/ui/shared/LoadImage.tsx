@@ -21,13 +21,22 @@ export interface LoadImageProps
 	extends Omit<ImageProps, 'src' | 'alt'>,
 		Props {}
 
-const PlaceHolderImage = ({ type }: { type: Props['type'] }) => {
+const PlaceHolderImage = ({
+	type,
+	className,
+}: {
+	type: Props['type']
+	className?: string
+}) => {
 	const src = type === 'person' ? PlaceholderPerson : PlaceholderMovie
 	return (
 		<Image
 			src={src}
 			alt="placeholder poster"
-			className="aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 bg-slate-100 object-cover "
+			className={cn(
+				'aspect-[2/3] w-full overflow-hidden rounded-lg border border-gray-200 bg-slate-100 object-cover ',
+				className,
+			)}
 		/>
 	)
 }
@@ -41,7 +50,7 @@ const LoadImage: React.FC<LoadImageProps> = async ({
 	...props
 }) => {
 	const { images: imageConfig } = await getImageConfiguration()
-	if (!path) return <PlaceHolderImage type={type} />
+	if (!path) return <PlaceHolderImage type={type} className={className} />
 	const src = posterUrlBuilder(imageConfig.base_url, size || 'original', path)
 
 	return (
