@@ -14,7 +14,7 @@ type Props = {
 }
 
 const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
-	// TODO : Simplify genre function + add promise.all
+	// Cannot append data for popular useCallback(
 	const [moviesList, genresConfig] = await Promise.all([
 		getMoviesList(currentPage, sortBy),
 		getGenres(),
@@ -23,7 +23,7 @@ const List: React.FC<Props> = async ({ currentPage, sortBy }) => {
 	moviesList.results.forEach(movie => {
 		// eslint-disable-next-line no-param-reassign
 		movie.genres = genresConfig.genres.filter(({ id }) =>
-			movie.genre_ids.includes(id),
+			movie.genre_ids?.includes(id),
 		)
 	})
 

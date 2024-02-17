@@ -55,7 +55,6 @@ export type TCrewMember = TPerson & {
 }
 
 export type TMovieCredits = {
-	id: number
 	cast: TCastMember[]
 	crew: TCrewMember[]
 }

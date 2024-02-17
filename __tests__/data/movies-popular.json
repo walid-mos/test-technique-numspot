@@ -1,0 +1,71 @@
+[
+	{
+		"page": 1,
+		"results": [
+			{
+				"adult": false,
+				"backdrop_path": "/pWsD91G2R1Da3AKM3ymr3UoIfRb.jpg",
+				"genre_ids": [878, 28, 18],
+				"id": 933131,
+				"original_language": "ko",
+				"original_title": "황야",
+				"overview": "Après un tremblement de terre dévastateur qui transforme Séoul en territoire hostile, un chasseur intrépide se met en tête de sauver une ado enlevée par un médecin fou.",
+				"popularity": 1924.206,
+				"poster_path": "/2mPde54Cl50Ck8DHEUnvLt56tXR.jpg",
+				"release_date": "2024-01-26",
+				"title": "Badland Hunters",
+				"video": false,
+				"vote_average": 6.708,
+				"vote_count": 407
+			}
+		],
+		"total_pages": 42501,
+		"total_results": 850005
+	},
+	{
+		"page": 2,
+		"results": [
+			{
+				"adult": false,
+				"backdrop_path": "/zIYROrkHJPYB3VTiW1L9QVgaQO.jpg",
+				"genre_ids": [28, 35],
+				"id": 897087,
+				"original_language": "en",
+				"original_title": "Freelance",
+				"overview": "Un agent des forces spéciales décide de prendre sa retraite de l’armée et de fonder une famille aux États-Unis. Après plusieurs années d’efforts pour se conformer à la vie en banlieue, il décide de sortir de sa retraite et d’accepter un contrat pour assurer la sécurité d’une journaliste alors qu’elle interviewe un dictateur sud-américain. Lorsqu’un coup d’État militaire éclate en plein milieu de l’interview, les voici tous trois contraints de s‘enfuir dans la jungle où ils doivent survivre aux éléments, aux militaires et les uns aux autres.",
+				"popularity": 521.515,
+				"poster_path": "/wRTKRKfXxf19eDEoxUYG6fPc1ob.jpg",
+				"release_date": "2023-10-05",
+				"title": "Freelance",
+				"video": false,
+				"vote_average": 6.56,
+				"vote_count": 557
+			}
+		],
+		"total_pages": 42501,
+		"total_results": 850003
+	},
+	{
+		"page": 3,
+		"results": [
+			{
+				"adult": false,
+				"backdrop_path": "/iiXliCeykkzmJ0Eg9RYJ7F2CWSz.jpg",
+				"genre_ids": [28, 53, 80],
+				"id": 762430,
+				"original_language": "en",
+				"original_title": "Retribution",
+				"overview": "Un homme d'affaires découvre qu'une bombe a été placée dans la voiture qu'il conduit par un assaillant inconnu. Ce dernier lui ordonne d'exécuter une série d'actions tout au long de la journée ou la bombe explosera... le tuant lui et sa famille.",
+				"popularity": 296.06,
+				"poster_path": "/5tUBMM1poZRmflHC40aWQ5TNr2f.jpg",
+				"release_date": "2023-08-23",
+				"title": "Retribution",
+				"video": false,
+				"vote_average": 6.799,
+				"vote_count": 926
+			}
+		],
+		"total_pages": 42503,
+		"total_results": 850049
+	}
+]

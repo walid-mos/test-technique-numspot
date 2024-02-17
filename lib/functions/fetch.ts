@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { notFound } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 import { API_TOKEN, authorizedSort, authorizedSortType } from '../constants'
 
@@ -21,6 +22,7 @@ export const fetchApi = async <T>(url: string) => {
 	const res = await fetch(url, options)
 
 	if (!res.ok) {
+		revalidatePath('/')
 		return notFound()
 	}
 
@@ -29,9 +31,9 @@ export const fetchApi = async <T>(url: string) => {
 	return data
 }
 
-export const buildSearchParams = (page: number, sortBy: TMoviesListSort) => {
+export const buildSearchParams = (page: number, sortBy?: TMoviesListSort) => {
 	const pageString = page ? `page=${page}` : `page=1`
-	if (!sortBy.length) return pageString
+	if (!sortBy?.length) return pageString
 
 	const sortByString = `sort_by=${sortBy.join('.')}`
 
