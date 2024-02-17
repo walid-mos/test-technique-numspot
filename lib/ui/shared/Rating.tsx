@@ -41,20 +41,28 @@ const Rating: React.FC<Props> = ({ rate, voters, popularity }) => {
 		<>
 			<div className="flex items-center text-sm">
 				{Array.from(stars).map(([, value]) => value)}
-				<span className={cn('ml-2 w-4 text-xs font-bold', ratingColor)}>
-					{rateFive.toFixed(2)}{' '}
+				<span
+					data-testid="rate"
+					className={cn('ml-2 w-4 text-xs font-bold', ratingColor)}>
+					{rateFive.toFixed(2)}
 				</span>
 			</div>
 			<div className="flex text-xs font-bold text-muted-foreground">
 				<div className="flex">
 					<PersonIcon className="font-normal" />
-					<span className="ml-2 w-4 text-end">{voters}</span>
+					<span data-testid="voters" className="ml-2 w-4 text-end">
+						{voters}
+					</span>
 				</div>
 			</div>
 			<div className="flex text-xs font-bold text-muted-foreground">
 				<div className="flex">
 					<HeartFilledIcon className="text-red-500" />
-					<span className="ml-2 w-4 text-end">{popularity}</span>
+					<span
+						data-testid="popularity"
+						className="ml-2 w-4 text-end">
+						{popularity}
+					</span>
 				</div>
 			</div>
 		</>
