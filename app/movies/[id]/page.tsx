@@ -1,5 +1,3 @@
-import { HeartFilledIcon } from '@radix-ui/react-icons'
-
 import Rating from '@/ui/shared/Rating'
 import Credits from '@/ui/movie/Credits'
 import { Badge } from '@/components/Badge'
